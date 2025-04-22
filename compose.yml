@@ -1,5 +1,4 @@
 services:
-
   db:
     environment:
       MYSQL_ROOT_HOST: ${DB_ROOT_HOST}
@@ -19,6 +18,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+    ports:
+      - "3001:80"
 
 volumes:
   db_data:
